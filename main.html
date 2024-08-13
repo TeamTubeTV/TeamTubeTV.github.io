@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!--FONTS-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+
+<title>TeamTube's Lair</title>
+<style>
+.game-icon{
+	width:200px;
+	height:200px;
+	background-color:black;
+	padding:2px;
+	border-radius:3px;
+}
+
+.roboto-mono-h1 {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.roboto-mono-h2 {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-mono-h3 {
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.grid {
+	display: grid;
+	grid-gap: 3%;
+	grid-template-columns: repeat(4,1fr);
+	grid-template-rows: repeat(2,1fr);
+}
+
+body{
+	background-image: linear-gradient(to bottom, #09000b, #0d001a);
+	background-attachment:fixed;
+	background-repeat: no repeat;
+}
+
+</style>
+</head>
+
+<body>
+<!--Title Text-->
+<center style="color:white;">
+<div style="margin:2%;" class="roboto-mono-h1">
+<h1>Welcome to TeamTube's Lair</h1>
+</div>
+<!--Game Section-->
+<h2 style="margin-bottom:80px" class="roboto-mono-h2">Here are some fun games!</h2>
+<div style = "width:90%;height:100%;background-color:#f2f2f2;padding:5px;border-radius:5px;" class="grid">
+	<div onclick="startGameTemplate" class="game-icon">
+	<h3 class="roboto-mono-h3" style="margin:1px;">Template</h3>
+	<img style="width:160px;height:160px;"></img>
+	</div>
+</center>
+</body>
+
+<script>
+
+</script>
+
+</html>
