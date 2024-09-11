@@ -12,13 +12,15 @@ function DrawButton(x,y,w,h,text,functionToCall,textcolor="#ffffff",font="50pt A
 	ctx.textAlign = 'middle'
 	var th = Number(font.split('p')[0])
 	ctx.fillText(text,x+w/2-Math.min(w,ts.width)/2,y+h/2+th/2-th*0.12,w);
-	buttons.push({bx:x,by:y,bw:w,bh:h,func:functionToCall});
+	buttons.push({bx:x*(canvas.width/1358),by:y+(canvas.height/652),bw:w*(canvas.width/1358),bh:h+(canvas.height/652),func:functionToCall});
 }
 
 function ResizeCanvas(w,h){
 	canvas.width = w-15;
 	canvas.height = h-20;
-	ctx.scale(canvas.width/1358,canvas.height/652)
+	console.log("Resized: " + canvas.width + ", " + canvas.height);
+	ctx.scale(canvas.width/1358,canvas.height/652);
+	
 }
 
 function DrawLine(x1,y1,x2,y2,w,color){
@@ -139,8 +141,8 @@ ResizeCanvas(window.innerWidth, window.innerHeight);
 
 const mouse = {x:0,y:0};
 window.addEventListener("mousedown",(e)=>{
-	mouse.x = e.clientX * (canvas.width/1343);
-	mouse.y = e.clientY * (canvas.height/632);
+	mouse.x = e.clientX
+	mouse.y = e.clientY
 	//LeftClick
 	if(e.button == 0){
 		buttons.forEach((b,id)=>{
