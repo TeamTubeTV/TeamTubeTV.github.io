@@ -12,7 +12,7 @@ function DrawButton(x,y,w,h,text,functionToCall,textcolor="#ffffff",font="50pt A
 	ctx.textAlign = 'middle'
 	var th = Number(font.split('p')[0])
 	ctx.fillText(text,x+w/2-Math.min(w,ts.width)/2,y+h/2+th/2-th*0.12,w);
-	buttons.push({bx:x*(canvas.width/1358),by:y+(canvas.height/652),bw:w*(canvas.width/1358),bh:h+(canvas.height/652),func:functionToCall});
+	buttons.push({bx:x*(canvas.width/1358),by:y*(canvas.height/652),bw:w*(canvas.width/1358),bh:h*(canvas.height/652),func:functionToCall});
 }
 
 function ResizeCanvas(w,h){
