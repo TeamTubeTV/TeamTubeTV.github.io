@@ -141,8 +141,8 @@ class Ball extends CircleCollider{
 function Resize(){
 	scale = Math.min(window.innerWidth / BASEW, window.innerHeight / BASEH);
 	console.log(scale);
-	cvs.width = scale * BASEW -8;
-	cvs.height = scale * BASEH -8;
+	cvs.width = scale * (BASEW - 8);
+	cvs.height = scale * (BASEH -8);
 	ctx.scale(scale,scale);
 }
 Resize();
@@ -163,7 +163,6 @@ function DrawImage(image,x,y,w,h,centered=false){
 }
 
 function DrawText(text,x,y,color="white",font="30px Arial",centered=false){
-	x/=scale;
 	ctx.fillStyle = color;
 	ctx.font = font;
 	var th = font.split("p")
@@ -185,8 +184,8 @@ function DrawButton(x,y,w,h,text,functionToCall,textcolor="#ffffff",font="50pt A
 	ctx.textAlign = 'middle'
 	var th = Number(font.split('p')[0])
 	console.log(th)
-	ctx.fillText(text,x+w/2-Math.min(w,ts.width)/2,y+h/2+th/2-th*0.12,w);
-	buttons.push({bx:x,by:y,bw:w,bh:h,func:functionToCall});
+	ctx.fillText(text,(x+w/2-Math.min(w,ts.width)/2),y+h/2+th/2-th*0.12,w);
+	buttons.push({bx:x*scale,by:y*scale,bw:w*scale,bh:h*scale,func:functionToCall});
 }
 const mouse = {x:0,y:0};
 window.addEventListener("mousedown",(e)=>{
@@ -225,10 +224,10 @@ zoneValues[1.75] = 5;
 for(let y = 2; y < 12; y++){
 	for(let x = 0; x < y; x++){
 		//create a PEG
-		PEGS.push(new Peg((x*55)+(cvs.width/2)-(y*55/2)+25,y*55-20,Math.sqrt(50)))
+		PEGS.push(new Peg((x*55)+(BASEW/2)-(y*55/2)+25,y*55-20,Math.sqrt(50)))
 		if(y == 10){
-			var zoneval = zoneValues[0.25*Math.round(Math.sqrt(Math.abs(cvs.width/2-((x*55)+(cvs.width/2)-(y*55/2)+25))/5))];
-			ZONES.push(new Zone((x*55)+(cvs.width/2)-(y*55/2),y+11*55-20,50,40,zoneval,zoneColors[zoneval]))
+			var zoneval = zoneValues[0.25*Math.round(Math.sqrt(Math.abs(BASEW/2-((x*55)+(BASEW/2)-(y*55/2)+25))/5))];
+			ZONES.push(new Zone((x*55)+(BASEW/2)-(y*55/2),y+11*55-20,50,40,zoneval,zoneColors[zoneval]))
 		}
 	}
 }
@@ -238,7 +237,7 @@ var dropcooldown = false;
 var valueselected = 1;
 function loop(){
 	Fill("grey");
-	DrawText("MONEY BALLS SIM 2024",cvs.width/2,25,"white","50px Arial",true);
+	DrawText("MONEY BALLS SIM 2024",BASEW/2,25,"white","50px Arial",true);
 	DrawText("MONEY: "+MONEY.toString()+"$",200,100,"#ffcc00","30px Arial",true);
 	//BALL VALUE BUTTONS
 	DrawButton(1100,200,100,50,"1$",()=>{valueselected = 1;}, (valueselected == 1) ? "black" : "white","30px Arial",(valueselected == 1) ? "white" : "black");
@@ -246,10 +245,10 @@ function loop(){
 	DrawButton(1100,400,100,50,"5$",()=>{valueselected = 5;},(valueselected == 5) ? "black" : "white","30px Arial",(valueselected == 5) ? "white" : "black");
 	DrawButton(1100,500,100,50,"10$",()=>{valueselected = 10;},(valueselected == 10) ? "black" : "white","30px Arial",(valueselected == 10) ? "white" : "black");
 	
-	DrawButton(100,200,200,50,"DROP",()=>{if(dropcooldown)return;BALLS.push(new Ball(cvs.width/2,10,15,valueselected));MONEY-=valueselected;dropcooldown = true},"white","30px Arial","black")
+	DrawButton(100,200,200,50,"DROP",()=>{if(dropcooldown)return;BALLS.push(new Ball(BASEW/2,10,15,valueselected));MONEY-=valueselected;dropcooldown = true},"white","30px Arial","black")
 	ZONES.forEach((e)=>{MONEY+=e.update();e.render()});
 	PEGS.forEach((e)=>{e.render(0,0,2)});
-	BALLS.forEach((e,i)=>{e.update(PEGS);e.render();if(e.position.y > cvs.height){BALLS.splice(i,1);MONEY+=e.value}});
+	BALLS.forEach((e,i)=>{e.update(PEGS);e.render();if(e.position.y > BASEH){BALLS.splice(i,1);MONEY+=e.value}});
 }
 
 window.setInterval(loop,1000/FPS);
