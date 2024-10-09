@@ -47,8 +47,8 @@ function DrawPolygon(x,y,vector2Array,color,fill=true,bw=1,bcolor="none"){
 
 function Fill(color){
 	ctx.fillStyle = color;
-	ctx.clearRect(0,0,canvas.width+15,canvas.height+20);
-	ctx.fillRect(0,0,canvas.width+15,canvas.height+20);
+	ctx.clearRect(0,0,canvas.width*2,canvas.height*2);
+	ctx.fillRect(0,0,canvas.width*2,canvas.height*2);
 	buttons = [];//resets the buttons
 }
 
@@ -177,7 +177,7 @@ var cards = [];
 var hand = [];
 var dealer = [];
 
-var money = localStorage.getItem("money");
+var money = localStorage.getItem("tttvmoney");
 if(money == undefined){money = 100;}else{money = Number(money)}
 var gamestep = 0;
 var winstatus = 0;
@@ -266,7 +266,7 @@ var dealertimer = 0;
 function gameLoop(){
 	Fill("#009933");
 	DrawText(0,25,"BLACKJACK by TeamTube","#ffffff","25px Arial");
-	DrawText(1000,25,"MONEY: "+money,"white","25px Arial")
+	DrawText(1000,25,"MONEY: "+money+"$","white","25px Arial")
 	ctx.drawImage(images.chips,1100,550,200,100);
 	DrawText(1100,650,"BET:"+bet,"yellow");
 	//deck
