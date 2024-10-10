@@ -7,8 +7,8 @@ var scale = 1;
 var buttons = [];
 
 var MONEY = 150;
-if(localStorage.getItem("money")){
-	MONEY = Number(localStorage.getItem("money"));
+if(localStorage.getItem("tttvmoney")){
+	MONEY = Number(localStorage.getItem("tttvmoney"));
 }
 
 
@@ -204,7 +204,7 @@ window.addEventListener("mouseup",(e)=>{
 	if(dropcooldown)dropcooldown = false;
 });
 window.addEventListener("beforeunload",(e)=>{
-	localStorage.setItem("money",MONEY.toString());
+	localStorage.setItem("tttvmoney",MONEY.toString());
 })
 
 var zoneColors = [];
