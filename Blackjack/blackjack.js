@@ -156,7 +156,7 @@ window.addEventListener("resize",(e)=>{
 	ResizeCanvas(window.innerWidth, window.innerHeight);
 });
 
-window.addEventListener("beforeunload",(e)=>{localStorage.setItem("money",money.toString(10));})
+window.addEventListener("beforeunload",(e)=>{localStorage.setItem("tttvmoney",money.toString(10));})
 
 const DECK = [
 	1,1, //AKA 11 (A -> Ace)
