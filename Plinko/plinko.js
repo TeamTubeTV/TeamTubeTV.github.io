@@ -1,4 +1,5 @@
 //plinko.js
+const ROWS = 13;
 const BASEW = 1358;const BASEH = 652;
 const FPS = 120;
 var cvs = document.getElementById("canvas");
@@ -10,7 +11,6 @@ var MONEY = 150;
 if(localStorage.getItem("tttvmoney")){
 	MONEY = Number(localStorage.getItem("tttvmoney"));
 }
-
 
 //images
 var BALLIMG = document.getElementById("ball");
@@ -110,8 +110,13 @@ class CircleCollider{
 					i = 2;
 				}
 			});
+			//check if ball is out of the pinfall -> check if inside abs func
+			
 			i++;
 		}
+		var ballrange = [(this.position.y-5)/2+BASEW/2,-(this.position.y-5)/2+BASEW/2].sort((a,b)=>{return a-b;});
+		if(this.position.x < ballrange[0] && this.position.y > 55) this.vel.x = ballrange[0]-this.position.x;
+		else if(this.position.x > ballrange[1] && this.position > 55) this.vel.x = ballrange[1]-this.position.x;
 	}
 }
 
@@ -207,27 +212,23 @@ window.addEventListener("beforeunload",(e)=>{
 	localStorage.setItem("tttvmoney",MONEY.toString());
 })
 
-var zoneColors = [];
-zoneColors[0.75] = "#b32d00"
-zoneColors[1] = "#e68a00"
-zoneColors[1.5] = "#e6b800"
-zoneColors[2.5] = "#44cc00"
-zoneColors[5] = "#00b300"
+var zoneColors = ["#800000","#b32d00","#e68a00","#e6b800","#44cc00","#00b300"];
 
-var zoneValues = [];
-zoneValues[0.5] = 0.75;
-zoneValues[1] = 1;
-zoneValues[1.25] = 1.5;
-zoneValues[1.5] = 2.5;
-zoneValues[1.75] = 5;
+var zoneValues = [0.5,1,1.25,1.5,2.5,5];
 
-for(let y = 2; y < 12; y++){
+//OUTERWALLS FUNCTION(abs func) -> y = a=>(-55/27.5 = -2)*|x-h=>(BASEW/2 = 679)|+k=>(5)
+// ex: x=? y=-2|x-679|+5
+//         (y-5)/2=|x-679|
+//        get the x's from here with the +- results
+//   RESULTS: x1 = (y-5)/2+BASEW/2  x2 = -(y-5)/2+BASEW/2
+for(let y = 2; y < ROWS; y++){
 	for(let x = 0; x < y; x++){
 		//create a PEG
-		PEGS.push(new Peg((x*55)+(BASEW/2)-(y*55/2)+25,y*55-20,Math.sqrt(50)))
-		if(y == 10){
-			var zoneval = zoneValues[0.25*Math.round(Math.sqrt(Math.abs(BASEW/2-((x*55)+(BASEW/2)-(y*55/2)+25))/5))];
-			ZONES.push(new Zone((x*55)+(BASEW/2)-(y*55/2),y+11*55-20,50,40,zoneval,zoneColors[zoneval]))
+		PEGS.push(new Peg((x*55)+(BASEW/2)-(y*55/2)+25,y*55-60,Math.sqrt(50)));
+		if(y == 11){
+			var zoneval = zoneValues[Math.abs(x-5)];
+			var zonecolor = zoneColors[Math.abs(x-5)]
+			ZONES.push(new Zone((x*55)+(BASEW/2)-(y*55/2),y+11*55-10,50,40,zoneval,zonecolor));
 		}
 	}
 }
@@ -237,7 +238,8 @@ var dropcooldown = false;
 var valueselected = 1;
 function loop(){
 	Fill("grey");
-	DrawText("MONEY BALLS SIM 2024",BASEW/2,25,"white","50px Arial",true);
+	DrawText("MONEY BALLS SIM 2024",300,25,"white","40px Arial",true);
+	DrawText("MONEY BALLS SIM 2024",1050,25,"white","40px Arial",true);
 	DrawText("MONEY: "+MONEY.toString()+"$",200,100,"#ffcc00","30px Arial",true);
 	//BALL VALUE BUTTONS
 	DrawButton(1100,200,100,50,"1$",()=>{valueselected = 1;}, (valueselected == 1) ? "black" : "white","30px Arial",(valueselected == 1) ? "white" : "black");
@@ -245,7 +247,7 @@ function loop(){
 	DrawButton(1100,400,100,50,"5$",()=>{valueselected = 5;},(valueselected == 5) ? "black" : "white","30px Arial",(valueselected == 5) ? "white" : "black");
 	DrawButton(1100,500,100,50,"10$",()=>{valueselected = 10;},(valueselected == 10) ? "black" : "white","30px Arial",(valueselected == 10) ? "white" : "black");
 	
-	DrawButton(100,200,200,50,"DROP",()=>{if(dropcooldown)return;BALLS.push(new Ball(BASEW/2,10,15,valueselected));MONEY-=valueselected;dropcooldown = true},"white","30px Arial","black")
+	DrawButton(100,200,200,50,"DROP",()=>{if(dropcooldown || MONEY < valueselected)return;BALLS.push(new Ball(BASEW/2,0,15,valueselected));MONEY-=valueselected;dropcooldown = true},"white","30px Arial","black")
 	ZONES.forEach((e)=>{MONEY+=e.update();e.render()});
 	PEGS.forEach((e)=>{e.render(0,0,2)});
 	BALLS.forEach((e,i)=>{e.update(PEGS);e.render();if(e.position.y > BASEH){BALLS.splice(i,1);MONEY+=e.value}});
