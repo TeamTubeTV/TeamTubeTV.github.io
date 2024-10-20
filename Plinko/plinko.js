@@ -188,7 +188,6 @@ function DrawButton(x,y,w,h,text,functionToCall,textcolor="#ffffff",font="50pt A
 	var ts = ctx.measureText(text)
 	ctx.textAlign = 'middle'
 	var th = Number(font.split('p')[0])
-	console.log(th)
 	ctx.fillText(text,(x+w/2-Math.min(w,ts.width)/2),y+h/2+th/2-th*0.12,w);
 	buttons.push({bx:x*scale,by:y*scale,bw:w*scale,bh:h*scale,func:functionToCall});
 }
