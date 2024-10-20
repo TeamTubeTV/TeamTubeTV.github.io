@@ -178,7 +178,7 @@ var hand = [];
 var dealer = [];
 
 var money = localStorage.getItem("tttvmoney");
-if(money == undefined){money = 100;}else{money = Number(money)}
+if(money == undefined){money = 150;}else{money = Number(money)}
 var gamestep = 0;
 var winstatus = 0;
 var bet = 0;
